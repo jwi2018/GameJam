@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS8321: 로컬 함수가 선언되었지만 사용되지 않음
+dotnet_diagnostic.CS8321.severity = error
