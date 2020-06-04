@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class TextAndFace : MonoBehaviour
 {
-    string[,] chatArr;
-    string[,] chatOptionArr;
+    //string[,] chatArr;
+    //string[,] chatOptionArr;
 
     public List<Text> chatList;
     public List<Text> chatOptionList;
@@ -14,10 +14,9 @@ public class TextAndFace : MonoBehaviour
     int ranId = 0;
     string likePhase = "0";
     int liking = 0;
-    //public Text loveText;
-    //public Text option1;
-    //public Text option2;
     public Image face;
+    int po = 0;
+
 
     public Sprite faceTypeA, faceTypeB, faceTypeC, faceTypeD, faceTypeE;
 
@@ -28,46 +27,22 @@ public class TextAndFace : MonoBehaviour
 
     public IEnumerator StartLoveToAssignment()
     {
-        yield return new WaitForSeconds(0.5f);
-        StartCoroutine("CsvReadChatText");
+        //yield return new WaitForSeconds(0.5f);
         StartCoroutine("ChatText");
         StartCoroutine("ChatFace");
         yield return null;              // 스위치문 때문에 null 사용
     }
-
-    IEnumerator CsvReadChatText()           //  채팅 CSV 파일 다 읽어와서 2차 배열에 입력.
-    {
-        chatArr = new string[CsvRead.chatTableId, 6];
-        chatOptionArr = new string[CsvRead.chatOptionTableId, 7];
-
-        for (int chatId = 0; chatId < CsvRead.chatTableId; chatId++)        // 2차원 배열 사용시 
-        {
-            for (int chatTxt = 0; chatTxt < 6; chatTxt++)
-            {
-                chatArr[chatId, chatTxt] = CsvRead.doubleChatList[chatId, chatTxt];
-            }
-        }
-
-        for (int chatOpId = 0; chatOpId < CsvRead.chatOptionTableId; chatOpId++)        // 2차원 배열 사용시 
-        {
-            for (int chatOpTxt = 0; chatOpTxt < 7; chatOpTxt++)
-            {
-                chatOptionArr[chatOpId, chatOpTxt] = CsvRead.doubleChatOptionList[chatOpId, chatOpTxt];
-            }
-        }
-        yield return new WaitForSeconds(1f);
-    }
-
+    
     IEnumerator ChatFace()     // 얼굴 타입 별 표정 변화
     {
         while (true)
         {
-            if(Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 ranId = Random.Range(0, 50);
                 likePhase = Save.Liking_phase.ToString();
 
-                switch (chatArr[ranId, 2])       // 표정 변경 스위치 문 
+                switch (CsvRead.doubleChatList[ranId, 2])       // 표정 변경 스위치 문 
                 {
                     case "0":
                         face.sprite = faceTypeA;
@@ -90,79 +65,119 @@ public class TextAndFace : MonoBehaviour
         }
     }
 
-    IEnumerator ChatText()      // 대사
+    IEnumerator ChatText()      // 대사 출력
     {
         while (true)
         {
             if(Input.GetMouseButtonDown(0))
             {
                 liking = Save.Liking;
+                po = Save.optionPoint;
 
-                Debug.Log("2");
+                //Debug.Log("4");
                 Debug.Log(liking);
+                Debug.Log(LoveBarContraller.curLike);
+                //Debug.Log(po);
+                int RanChage = Random.Range(0, 4);
 
-                if (liking < 100)
+                if (RanChage == 1)
                 {
-                    int ranIdFirs = Random.Range(0, 9);
-                    //loveText.text = chatArr[ranIdFirs, 3];
-                    chatList[0].text = chatArr[ranIdFirs, 3];
+                    if (liking < 100)
+                    {
+                        int ranIdFirs = Random.Range(0, 9);
+                        chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
+                    }
+                    else if (liking == 100)
+                    {
+                        chatList[0].text = CsvRead.doubleChatList[10, 3];
+                        for (int num = 0; num < 2; num++)
+                        {
+                            chatOptionList[num].text = CsvRead.doubleChatOptionList[0, num + 1];
+                        }
+                    }
+                    else if (liking > 101 && liking < 200)
+                    {
+                        int ranIdFirs = Random.Range(11, 19);
+                        chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
+                    }
+                    else if (liking == 200)
+                    {
+                        chatList[0].text = CsvRead.doubleChatList[20, 3];
+                        for (int num = 0; num < 2; num++)
+                        {
+                            chatOptionList[num].text = CsvRead.doubleChatOptionList[1, num + 1];
+                        }
+                    }
+                    else if (liking > 201 && liking < 300)
+                    {
+                        int ranIdFirs = Random.Range(21, 29);
+                        chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
+                    }
+                    else if (liking == 300)
+                    {
+                        chatList[0].text = CsvRead.doubleChatList[30, 3];
+                        for (int num = 0; num < 2; num++)
+                        {
+                            chatOptionList[num].text = CsvRead.doubleChatOptionList[2, num + 1];
+                        }
+                    }
+                    else if (liking > 301 && liking < 400)
+                    {
+                        int ranIdFirs = Random.Range(31, 39);
+                        chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
+                    }
+                    else if (liking == 400)
+                    {
+                        chatList[0].text = CsvRead.doubleChatList[40, 3];
+                        for (int num = 0; num < 2; num++)
+                        {
+                            chatOptionList[num].text = CsvRead.doubleChatOptionList[3, num + 1];
+                        }
+                    }
+                    else if (liking > 401 && liking < 500)
+                    {
+                        int ranIdFirs = Random.Range(41, 49);
+                        chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
+                    }
+                    else if (liking == 500)
+                    {
+                        chatList[0].text = CsvRead.doubleChatList[50, 3];
+                        for (int num = 0; num < 2; num++)
+                        {
+                            chatOptionList[num].text = CsvRead.doubleChatOptionList[4, num + 1];
+                        }
+                    }
                 }
-                else if(liking == 100)
-                {          
-                    //loveText.text = chatArr[10, 3];
-                    //option1.text = chatOptionArr[0, 1];
-                    //option2.text = chatOptionArr[0, 2];
-                }
-                else if (liking > 101 && liking < 200)
-                {
-                    int ranIdFirs = Random.Range(11, 19);
-                    //loveText.text = chatArr[ranIdFirs, 3];
-                }
-                else if (liking == 200)
-                {
-                    //loveText.text = chatArr[20, 3];
-                    //option1.text = chatOptionArr[1, 1];
-                    //option2.text = chatOptionArr[1, 2];
-                }
-                else if (liking > 201 && liking < 300)
-                {
-                    int ranIdFirs = Random.Range(21, 29);
-                    //loveText.text = chatArr[ranIdFirs, 3];
-                }
-                else if (liking == 300)
-                {
-                    //loveText.text = chatArr[30, 3];
-                    //option1.text = chatOptionArr[2, 1];
-                    //option2.text = chatOptionArr[2, 2];
-                }
-                else if (liking > 301 && liking < 400)
-                {
-                    int ranIdFirs = Random.Range(31, 39);              
-                    //loveText.text = chatArr[ranIdFirs, 3];
-                }
-                else if (liking == 400)
-                {
-                    //loveText.text = chatArr[30, 3];
-                    //option1.text = chatOptionArr[3, 1];
-                    //option2.text = chatOptionArr[3, 2];
-                }
-                else if (liking > 401 && liking < 500)
-                {
-                    int ranIdFirs = Random.Range(41, 49);
-                    //loveText.text = chatArr[ranIdFirs, 3];
-                }
-                else if (liking == 500)
-                {
-                    //loveText.text = chatArr[50, 3];
-                    //option1.text = chatOptionArr[4, 1];
-                    //option2.text = chatOptionArr[4, 2];
-                }
-
             }
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.001f);
         }
     }
-    
+
+    /*
+    IEnumerator CsvReadChatText()           //  채팅 CSV 파일 다 읽어와서 2차 배열에 입력. 
+    {
+        chatArr = new string[CsvRead.chatTableId, 6];
+        chatOptionArr = new string[CsvRead.chatOptionTableId, 7];
+
+        for (int chatId = 0; chatId < CsvRead.chatTableId; chatId++)        // 2차원 배열 사용시 
+        {
+            for (int chatTxt = 0; chatTxt < 6; chatTxt++)
+            {
+                chatArr[chatId, chatTxt] = CsvRead.doubleChatList[chatId, chatTxt];
+            }
+        }
+
+        for (int chatOpId = 0; chatOpId < CsvRead.chatOptionTableId; chatOpId++)        // 2차원 배열 사용시 
+        {
+            for (int chatOpTxt = 0; chatOpTxt < 7; chatOpTxt++)
+            {
+                chatOptionArr[chatOpId, chatOpTxt] = CsvRead.doubleChatOptionList[chatOpId, chatOpTxt];
+            }
+        }
+        yield return new WaitForSeconds(1f);
+    }
+    */
+
     /*
     public IEnumerator FaceAndText()
     {

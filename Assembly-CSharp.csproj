@@ -63,7 +63,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\ChatOptionButton.cs" />
     <Compile Include="Assets\Scripts\ClickDisplayMove.cs" />
     <Compile Include="Assets\Scripts\CsvRead.cs" />
     <Compile Include="Assets\Scripts\DText.cs" />
@@ -73,6 +72,7 @@
     <Compile Include="Assets\Scripts\FadeChat.cs" />
     <Compile Include="Assets\Scripts\FadeChatOption.cs" />
     <Compile Include="Assets\Scripts\LoveBarContraller.cs" />
+    <Compile Include="Assets\Scripts\OptionButtonClick.cs" />
     <Compile Include="Assets\Scripts\Save.cs" />
     <Compile Include="Assets\Scripts\TextAndFace.cs" />
     <Reference Include="Unity.Timeline.Editor">

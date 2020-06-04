@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 public class LoveBarContraller : MonoBehaviour
 {
-	public int curLike ;
+	public static int curLike ;
 	public Image curLikeper1, nextLikeper2;
 	public int likeSlider = 100;
 	public int MAXLike = 1000;
 	public List<Color> colors;
+
+	public static LoveBarContraller loveBarContraller;
 
 	void Start()
 	{
@@ -24,11 +26,28 @@ public class LoveBarContraller : MonoBehaviour
 
 	public void ClickLiking()//클릭했을때 호감도 1증가 
 	{
+		/*
 		if (Input.GetMouseButtonDown(0))
 		{
 			// Clik이라는 오브젝트를 만들어서 클릭시 사라지면서 호감도가 오르면서 대사가 나오게
 			curLike += 1;
 			Save.Liking = curLike;
+		}
+		*/
+		
+		if (Input.GetMouseButtonDown(0))
+		{
+			if (Save.Liking == 100 || Save.Liking == 200 || Save.Liking == 300 || Save.Liking == 400 || Save.Liking == 500)
+			{
+				// Clik이라는 오브젝트를 만들어서 클릭시 사라지면서 호감도가 오르면서 대사가 나오게
+				curLike += 0;
+				Save.Liking = curLike;
+			}
+			else
+			{
+				curLike += 1;
+				Save.Liking = curLike;
+			}
 		}
 	}
 

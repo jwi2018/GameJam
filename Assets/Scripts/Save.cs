@@ -8,11 +8,13 @@ public class Save : MonoBehaviour
     public static int Liking;//호감도를 저장합니다.
     public static Save save;
     public static int Liking_phase;
+    public static int optionPoint;
 
     private void Awake()//초기화후 먼저 실행 
     {
         save = this;
         Liking = PlayerPrefs.GetInt("liking"); //호감도 불러오기
+        optionPoint = PlayerPrefs.GetInt("Point");
         StartCoroutine("AutoSave");
     }
 
@@ -23,6 +25,7 @@ public class Save : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))//뒤로가기를 눌렀을때 세이브 코루틴 저장
         {
             LoveSave();
+            PointSave();
             Application.Quit();
         }
     }
@@ -85,14 +88,21 @@ public class Save : MonoBehaviour
         PlayerPrefs.SetInt("liking", (int)Liking);
     }
 
+    public void PointSave()
+    {
+        PlayerPrefs.SetInt("Point", (int)optionPoint);
+    }
+
     void OnApplicationPause()//잠시 멈추고 화면을 나갈때 저장합니다.
     {
         LoveSave();
+        PointSave();
     }
 
     private void OnApplicationQuit()
     {
         LoveSave();
+        PointSave();
     }
 
     IEnumerator AutoSave()
@@ -107,6 +117,7 @@ public class Save : MonoBehaviour
     IEnumerator Saving()
     {//프리팹으로 저장합니다.
         PlayerPrefs.SetInt("liking", (int)Liking);
+        PlayerPrefs.SetInt("Point", (int)optionPoint);
         yield break;
     }
 }

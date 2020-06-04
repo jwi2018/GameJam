@@ -1,60 +1,126 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FadeChatOption : MonoBehaviour
 {
-    private bool state;
     int liking = 0;
-    // Start is called before the first frame update
+    int optionPoint = 0;
+    int loveIntFir = 0;
+    int pointIntFir = 0;
+    string loveStringFir = "0";
+    string pointStringFir = "0";
+    int loveIntSec = 0;
+    int pointIntSec = 0;
+    string loveStringSec = "0";
+    string pointStringSec = "0";
+    int num = 0;
+    public Button optionButtonFir;
+    public Button optionButtonSec;
+    int loveBarCur = 0;
+
+
     void Start()
     {
-        state = false;
+        StartCoroutine("OptionButton");
     }
 
-    // Update is called once per frame
+    /*
     void Update()
     {
         liking = Save.Liking;
 
-        if(Input.GetMouseButtonDown(0))
+        Debug.Log("2");
+        Debug.Log(liking);
+
+        if (liking == 100 && liking == 200 && liking == 300 && liking == 400 && liking == 500)
         {
-            if (liking == 100)
-            {
-                gameObject.SetActive(true);
+            //Time.timeScale = 0.0f;
+            optionButtonFir.gameObject.SetActive(true);
+            optionButtonSec.gameObject.SetActive(true);
+        }
+        else
+        {
+            optionButtonFir.gameObject.SetActive(false);
+            optionButtonSec.gameObject.SetActive(false);
+        }
+    }
+    */
 
-                state = true;
-            }
-            else if (liking == 200)
-            {
-                gameObject.SetActive(true);
+    IEnumerator OptionButton()
+    {
+        while (true)
+        {
+            liking = Save.Liking;
 
-                state = true;
-            }
-            else if (liking == 300)
+            if (liking == 100 || liking == 200 || liking == 300 || liking == 400 || liking == 500)
             {
-                gameObject.SetActive(true);
-
-                state = true;
-            }
-            else if (liking == 400)
-            {
-                gameObject.SetActive(true);
-
-                state = true;
-            }
-            else if (liking == 500)
-            {
-                gameObject.SetActive(true);
-
-                state = true;
+                //Time.timeScale = 0.0f;
+                optionButtonFir.gameObject.SetActive(true);
+                optionButtonSec.gameObject.SetActive(true);
             }
             else
             {
-                gameObject.SetActive(false);
-
-                state = false;
+                optionButtonFir.gameObject.SetActive(false);
+                optionButtonSec.gameObject.SetActive(false);
             }
+            yield return new WaitForSeconds(0.05f);
         }
     }
+
+
+    /*
+    public void OnClickFirOptionButton()        // 1번째 버튼 클릭 시 발생해야 하는 상황
+    {
+        liking = Save.Liking;
+        optionPoint = Save.optionPoint;
+
+        Debug.Log("1");
+        loveStringFir = CsvRead.doubleChatOptionList[num, 3];
+        Debug.Log(loveStringFir);
+        Debug.Log("2");
+        loveIntFir = int.Parse(loveStringFir);
+        Debug.Log(loveIntFir);
+
+        Debug.Log("3");
+        pointStringFir = CsvRead.doubleChatOptionList[num, 5];
+        Debug.Log(pointStringFir);
+        Debug.Log("4");
+        pointIntFir = int.Parse(pointStringFir);
+        Debug.Log(pointIntFir);
+
+        liking += loveIntFir;
+        Debug.Log(liking);
+        optionPoint += pointIntFir;
+
+        num++;
+
+        optionButtonFir.gameObject.SetActive(false);
+        optionButtonSec.gameObject.SetActive(false);
+
+        //Time.timeScale = 1.0f;
+    }
+    public void OnClickSecOptionButton()       // 2번째 버튼 클릭 시 발생해야 하는 상황
+    {
+        liking = Save.Liking;
+        optionPoint = Save.optionPoint;
+
+        loveStringSec = CsvRead.doubleChatOptionList[num, 4];
+        loveIntSec = int.Parse(loveStringSec);
+
+        pointStringSec = CsvRead.doubleChatOptionList[num, 6];
+        pointIntSec = int.Parse(pointStringSec);
+
+        liking += loveIntSec;
+        optionPoint += pointIntSec;
+
+        num++;
+
+        optionButtonFir.gameObject.SetActive(false);
+        optionButtonSec.gameObject.SetActive(false);
+
+        //Time.timeScale = 1.0f;
+    }
+    */
 }
