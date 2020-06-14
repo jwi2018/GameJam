@@ -16,6 +16,7 @@ public class TextAndFace : MonoBehaviour
     int liking = 0;
     public Image face;
     int po = 0;
+    int option = 0;
 
 
     public Sprite faceTypeA, faceTypeB, faceTypeC, faceTypeD, faceTypeE;
@@ -73,10 +74,10 @@ public class TextAndFace : MonoBehaviour
             {
                 liking = Save.Liking;
                 po = Save.optionPoint;
-
+                option = Save.stringEventOption;
                 //Debug.Log("4");
-                Debug.Log(liking);
-                Debug.Log(LoveBarContraller.curLike);
+                //Debug.Log(liking);
+                //Debug.Log(LoveBarContraller.curLike);
                 //Debug.Log(po);
                 int RanChage = Random.Range(0, 4);
 
@@ -84,11 +85,13 @@ public class TextAndFace : MonoBehaviour
                 {
                     if (liking < 100)
                     {
+                        Save.stringEventOption = 0;     // 옵션 값 0으로 변경.
                         int ranIdFirs = Random.Range(0, 9);
                         chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
                     }
                     else if (liking == 100)
                     {
+                        Save.stringEventOption = 1;     // 옵션 값 1으로 변경.
                         chatList[0].text = CsvRead.doubleChatList[10, 3];
                         for (int num = 0; num < 2; num++)
                         {
@@ -97,11 +100,13 @@ public class TextAndFace : MonoBehaviour
                     }
                     else if (liking > 101 && liking < 200)
                     {
+                        Save.stringEventOption = 0;
                         int ranIdFirs = Random.Range(11, 19);
                         chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
                     }
                     else if (liking == 200)
                     {
+                        Save.stringEventOption = 2;
                         chatList[0].text = CsvRead.doubleChatList[20, 3];
                         for (int num = 0; num < 2; num++)
                         {
@@ -110,11 +115,13 @@ public class TextAndFace : MonoBehaviour
                     }
                     else if (liking > 201 && liking < 300)
                     {
+                        Save.stringEventOption = 0;
                         int ranIdFirs = Random.Range(21, 29);
                         chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
                     }
                     else if (liking == 300)
                     {
+                        Save.stringEventOption = 3;
                         chatList[0].text = CsvRead.doubleChatList[30, 3];
                         for (int num = 0; num < 2; num++)
                         {
@@ -123,11 +130,13 @@ public class TextAndFace : MonoBehaviour
                     }
                     else if (liking > 301 && liking < 400)
                     {
+                        Save.stringEventOption = 0;
                         int ranIdFirs = Random.Range(31, 39);
                         chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
                     }
                     else if (liking == 400)
                     {
+                        Save.stringEventOption = 4;
                         chatList[0].text = CsvRead.doubleChatList[40, 3];
                         for (int num = 0; num < 2; num++)
                         {
@@ -136,11 +145,13 @@ public class TextAndFace : MonoBehaviour
                     }
                     else if (liking > 401 && liking < 500)
                     {
+                        Save.stringEventOption = 0;
                         int ranIdFirs = Random.Range(41, 49);
                         chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
                     }
                     else if (liking == 500)
                     {
+                        Save.stringEventOption = 5;
                         chatList[0].text = CsvRead.doubleChatList[50, 3];
                         for (int num = 0; num < 2; num++)
                         {

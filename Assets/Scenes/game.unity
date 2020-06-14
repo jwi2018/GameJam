@@ -3199,12 +3199,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75f66181fbb77e242aca049d2b8facbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disTableId_In: 40
-  chatTableId_In: 50
+  disTableId_In: 41
+  chatTableId_In: 51
   chatOptionTable_In: 5
+  eventTable_In: 19
   display_Table: {fileID: 4900000, guid: 64c084f2e32b1b44b8dc89021a510330, type: 3}
   chat_Table: {fileID: 4900000, guid: c94526b458d230b41b42d0f78aad6196, type: 3}
   chat_Option_Table: {fileID: 4900000, guid: 40db95cbc794e9b4ebb3b2f43c4e9756, type: 3}
+  event_Table: {fileID: 4900000, guid: 32cc5abee8d984f48ad28a3873497177, type: 3}
 --- !u!114 &1047521728
 MonoBehaviour:
   m_ObjectHideFlags: 0
