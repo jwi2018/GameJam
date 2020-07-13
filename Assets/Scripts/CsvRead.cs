@@ -28,7 +28,7 @@ public class CsvRead : MonoBehaviour
     public static string[,] doubleChatOptionList;
     public static string[,] doubleEventList;
     public static string[,] doubleEventTextList;
-    void Start()
+    void Awake()                // start에서 awake로 변경 = 다른 스크립트에서 변수가 적용되기 전에 0을 받아오는 경우가 생겼음.
     {
         disTableId = disTableId_In;
         chatTableId = chatTableId_In;
@@ -101,11 +101,11 @@ public class CsvRead : MonoBehaviour
             }
         }
 
-        for (int eventTextId = 0; eventTextId < eventTableId; eventTextId++)
+        for (int eventTextId = 0; eventTextId < eventTextTableId; eventTextId++)
         {
             for (int eventTextTxt = 0; eventTextTxt < 5; eventTextTxt++)
             {
-                doubleEventList[eventTextId, eventTextTxt] = eventList[listEventTextNum];
+                doubleEventTextList[eventTextId, eventTextTxt] = eventTextList[listEventTextNum];
                 listEventTextNum++;
             }
         }

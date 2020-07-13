@@ -20,6 +20,7 @@ public class FadeChatOption : MonoBehaviour
         {
             liking = Save.Liking;
 
+            //if (Save.stringEventOption != 0)
             if (liking == 100 || liking == 200 || liking == 300 || liking == 400 || liking == 500)
             {
                 //Time.timeScale = 0.0f;

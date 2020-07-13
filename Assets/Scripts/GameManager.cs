@@ -5,41 +5,23 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
-
-    public delegate void eventText();   // 이벤트 텍스트 델리게이트
-    public event eventText text_Print;
-
-    public delegate void eventCG();     // 이벤트 CG 델리게이트
-    public event eventCG cg_Play;
-
     public static int eventListId = 0;
-
-    string[,] eventListArr = new string[CsvRead.eventTableId, 5];       // 이벤트 리스트를 옮길 게임 매니저내의 2차 배열
-
-    // 옵션값 불러와서 옵션값과 동일한 이벤트 리스트의 그룹을 동일한 2차배열에 옮기고
-    // id를 증가시키면서 함수 이름을 분별 (if)문 사용함.  // 여기까지가 게임 매니저에 해당
-
-    //텍스트 펑션 기능
-    // ex) 텍스트 펑션일 경우 그 밸류값이 스트링 테이블의 id값과 동일하며 그 id값의 text를 출력한다.
-    // 마지막에 end_type 구분별로 상황에 따라 종료
+    string[,] eventListArr;
 
     void Start()
     {
+        eventListArr = new string[CsvRead.eventTableId, 5];
         StartCoroutine("EventListArr");
         StartCoroutine("StartEvent");
     }
 
-    IEnumerator EventListArr()
+    IEnumerator EventListArr()      // 이벤트 리스트의 모든 배열을 임의의 배열에다가 전부 복사해둔거
     {
-        // 이벤트 리스트 테이블
         for (int eventId = 0; eventId < CsvRead.eventTableId; eventId++)
         {
             for (int eventTxt = 0; eventTxt < 5; eventTxt++)
             {
-                if (Save.stringEventOption.ToString() == CsvRead.doubleEventList[eventId, 1])
-                {
-                    eventListArr[eventId, eventTxt] = CsvRead.doubleEventList[eventId, eventTxt];
-                }
+                eventListArr[eventId, eventTxt] = CsvRead.doubleEventList[eventId, eventTxt];
             }
         }
         yield return null;
@@ -49,53 +31,116 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            if (Save.stringEventOption != 0)
+            if (Save.eventStartPoint == 1) // 1일때 실행 . 0일 때 종료
             {
-                if (eventListArr[eventListId, 2] == "text_print")
+                if (Save.stringEventOption.ToString() == eventListArr[eventListId, 1])
                 {
-                    text_Print();
-                }
-                else if(eventListArr[eventListId, 2] == "cg_play")
-                {
-                    cg_Play();
-                }
+                    string endTypeStr = eventListArr[eventListId, 4];
+                    int endTypeInt = int.Parse(endTypeStr);
+                    
+                    // 해당 옵션 값과 이벤트 리스트의 그룹 값이 동일할때까지만 돌아가게끔 하면 됨.
 
-                // endType
-                if (eventListArr[eventListId, 4] == "0")
-                {
-                    eventListId++;
-                }
-                else if(eventListArr[eventListId, 4] == "1")
-                {
-                    yield return new WaitForSeconds(13f);
-                    eventListId++;
-                }
-                else if(eventListArr[eventListId, 4] == "2")
-                {
-                    while(true)
+
+                     // ----------------------텍스트 이벤트----------------------------
+
+                    if (eventListArr[eventListId, 2] == "text_Print" && endTypeInt == 0)
                     {
-                        if(Input.GetMouseButtonDown(0))
-                        {
-                            eventListId++;
-                            break;
-                        }
-                        yield return null;
+                        GameObject.Find("EventSystem").GetComponent<TextPrint>().EventTextPrint();
+
+                        eventListId++;
+                    }
+                    else if (eventListArr[eventListId, 2] == "text_Print" && endTypeInt == 1)
+                    {
+                        GameObject.Find("EventSystem").GetComponent<TextPrint>().EventTextPrint();
+
+                        yield return new WaitForSeconds(13f);
+                        eventListId++;
+                    }
+                    else if (eventListArr[eventListId, 2] == "text_Print" && endTypeInt == 2)
+                    {
+                        GameObject.Find("EventSystem").GetComponent<TextPrint>().EventTextPrint();
+                    }
+                    else if (eventListArr[eventListId, 2] == "text_Print" && endTypeInt == 3)
+                    {
+                        GameObject.Find("EventSystem").GetComponent<TextPrint>().EventTextPrint();
+                    }
+
+
+                     // ---------------------cg 이벤트--------------------------
+
+                    if (eventListArr[eventListId, 2] == "cg_Play" && endTypeInt == 0)
+                    {
+                        GameObject.Find("EventSystem").GetComponent<CGPlay>().EventCgPlay();
+
+                        eventListId++;
+                    }
+                    else if (eventListArr[eventListId, 2] == "cg_Play" && endTypeInt == 1)
+                    {
+                        GameObject.Find("EventSystem").GetComponent<CGPlay>().EventCgPlay();
+
+                        yield return new WaitForSeconds(13f);
+                        eventListId++;
+                    }
+                    else if (eventListArr[eventListId, 2] == "cg_Play" && endTypeInt == 2)
+                    {
+                        GameObject.Find("EventSystem").GetComponent<CGPlay>().EventCgPlay();
+                    }
+                    else if (eventListArr[eventListId, 2] == "cg_Play" && endTypeInt == 3)
+                    {
+                        GameObject.Find("EventSystem").GetComponent<CGPlay>().EventCgPlay();
                     }
                 }
-                else if(eventListArr[eventListId, 4] == "3")
+                else
                 {
-                    while (true)
-                    {
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            eventListId++;
-                            break;
-                        }
-                        yield return null;
-                    }
+                    GameObject.Find("EventSystem").GetComponent<CGPlay>().EventCgClose();
+
+                    Save.eventStartPoint = 0;
                 }
             }
-            yield return new WaitForSeconds(0.01f);
+            yield return null;
         }
     }
 }
+
+//Debug.Log(eventListArr[eventListId, 4]);
+
+/*
+if (eventListArr[eventListId, 2] == "text_Print")
+{
+    GameObject.Find("EventSystem").GetComponent<TextPrint>().EventTextPrint();
+
+    // endType
+    if (eventListArr[eventListId, 4] == "0")
+    {
+        eventListId++;
+    }
+    else if (eventListArr[eventListId, 4] == "1")
+    {
+        yield return new WaitForSeconds(13f);
+        eventListId++;
+    }
+    else if (eventListArr[eventListId, 4] == "2")
+    {
+        while (true)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                eventListId++;
+                break;
+            }
+            yield return null;
+        }
+    }
+    else if (eventListArr[eventListId, 4] == "3")
+    {
+        while (true)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                eventListId++;
+                break;
+            }
+            yield return null;
+        }
+    }
+}*/

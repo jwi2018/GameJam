@@ -15,14 +15,21 @@ public class TextAndFace : MonoBehaviour
     string likePhase = "0";
     int liking = 0;
     public Image face;
-    int po = 0;
+    int op = 0;
     int option = 0;
 
+    public Image cgImage0;
+    public Image eventChatImg;
+
+    public Text eventChatText;
 
     public Sprite faceTypeA, faceTypeB, faceTypeC, faceTypeD, faceTypeE;
 
     void Start()
     {
+        cgImage0.gameObject.SetActive(false);
+        eventChatImg.gameObject.SetActive(false);
+
         StartCoroutine("StartLoveToAssignment");
     }
 
@@ -73,13 +80,13 @@ public class TextAndFace : MonoBehaviour
             if(Input.GetMouseButtonDown(0))
             {
                 liking = Save.Liking;
-                po = Save.optionPoint;
+                op = Save.optionPoint;
                 option = Save.stringEventOption;
-                //Debug.Log("4");
-                //Debug.Log(liking);
-                //Debug.Log(LoveBarContraller.curLike);
-                //Debug.Log(po);
-                int RanChage = Random.Range(0, 4);
+
+                Debug.Log(liking);
+                //Debug.Log(option);
+
+                int RanChage = Random.Range(0, 2);
 
                 if (RanChage == 1)
                 {
@@ -92,6 +99,7 @@ public class TextAndFace : MonoBehaviour
                     else if (liking == 100)
                     {
                         Save.stringEventOption = 1;     // 옵션 값 1으로 변경.
+
                         chatList[0].text = CsvRead.doubleChatList[10, 3];
                         for (int num = 0; num < 2; num++)
                         {
@@ -101,6 +109,7 @@ public class TextAndFace : MonoBehaviour
                     else if (liking > 101 && liking < 200)
                     {
                         Save.stringEventOption = 0;
+
                         int ranIdFirs = Random.Range(11, 19);
                         chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
                     }
@@ -157,7 +166,7 @@ public class TextAndFace : MonoBehaviour
                         {
                             chatOptionList[num].text = CsvRead.doubleChatOptionList[4, num + 1];
                         }
-                    }
+                    } 
                 }
             }
             yield return new WaitForSeconds(0.001f);

@@ -6,18 +6,26 @@ using UnityEngine.UI;
 
 public class CGPlay : MonoBehaviour
 {
+    public static CGPlay cgPlay;
+
     public SpriteAtlas eventCg;
     public Image cgImage;
 
     void Start()
     {
-        GameManager.gameManager.cg_Play += EventCgPlay;
+        cgImage.gameObject.SetActive(false);
     }
     
     public void EventCgPlay()
     {
         string eventCgName = CsvRead.doubleEventList[GameManager.eventListId, 3];
-
         cgImage.sprite = eventCg.GetSprite(eventCgName);
+
+        cgImage.gameObject.SetActive(true);
+    }
+
+    public void EventCgClose()
+    {
+        cgImage.gameObject.SetActive(false);
     }
 }

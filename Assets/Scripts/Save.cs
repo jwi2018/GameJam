@@ -9,8 +9,8 @@ public class Save : MonoBehaviour
     public static Save save;
     public static int Liking_phase;
     public static int optionPoint;
-
     public static int stringEventOption;
+    public static int eventStartPoint;
 
     private void Awake()//초기화후 먼저 실행 
     {
@@ -18,6 +18,7 @@ public class Save : MonoBehaviour
         Liking = PlayerPrefs.GetInt("liking"); //호감도 불러오기
         optionPoint = PlayerPrefs.GetInt("Point");
         stringEventOption = PlayerPrefs.GetInt("Option");
+        eventStartPoint = PlayerPrefs.GetInt("StartOption");
         StartCoroutine("AutoSave");
     }
 
@@ -30,6 +31,7 @@ public class Save : MonoBehaviour
             LoveSave();
             PointSave();
             EventOption();
+            EventStartOption();
             Application.Quit();
         }
     }
@@ -102,11 +104,17 @@ public class Save : MonoBehaviour
         PlayerPrefs.SetInt("Option", (int)stringEventOption);
     }
 
+    public void EventStartOption()
+    {
+        PlayerPrefs.SetInt("StartOption", (int)eventStartPoint);
+    }
+
     void OnApplicationPause()//잠시 멈추고 화면을 나갈때 저장합니다.
     {
         LoveSave();
         PointSave();
         EventOption();
+        EventStartOption();
     }
 
     private void OnApplicationQuit()
@@ -114,6 +122,7 @@ public class Save : MonoBehaviour
         LoveSave();
         PointSave();
         EventOption();
+        EventStartOption();
     }
 
     IEnumerator AutoSave()
@@ -130,6 +139,7 @@ public class Save : MonoBehaviour
         PlayerPrefs.SetInt("liking", (int)Liking);
         PlayerPrefs.SetInt("Point", (int)optionPoint);
         PlayerPrefs.SetInt("Option", (int)stringEventOption);
+        PlayerPrefs.SetInt("StartOption", (int)eventStartPoint);
         yield break;
     }
 }

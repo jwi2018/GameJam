@@ -24,7 +24,7 @@ public class OptionButtonClick : MonoBehaviour
     {
         liking = Save.Liking;
         optionPoint = Save.optionPoint;
-
+ 
         loveStringFir = CsvRead.doubleChatOptionList[num, 3];
         loveIntFir = int.Parse(loveStringFir);
         pointStringFir = CsvRead.doubleChatOptionList[num, 5];
@@ -34,8 +34,11 @@ public class OptionButtonClick : MonoBehaviour
         LoveBarContraller.curLike += loveIntFir;
         Save.optionPoint += pointIntFir;
 
+        Save.eventStartPoint = 1;       // 1일때 이벤트 실행, 0일때 이벤트 종료
+
+        Debug.Log(Save.eventStartPoint);
+
         num++;
-        //Time.timeScale = 1.0f;
     }
     public void OnClickSecOptionButton()       // 2번째 버튼 클릭 시 발생해야 하는 상황
     {
@@ -52,7 +55,8 @@ public class OptionButtonClick : MonoBehaviour
         LoveBarContraller.curLike += loveIntSec;
         Save.optionPoint += pointIntSec;
 
+        Save.eventStartPoint = 1;
+
         num++;
-        //Time.timeScale = 1.0f;
     }
 }
