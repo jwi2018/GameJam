@@ -21,7 +21,8 @@ public class FadeChatOption : MonoBehaviour
             liking = Save.Liking;
 
             //if (Save.stringEventOption != 0)
-            if (liking == 100 || liking == 200 || liking == 300 || liking == 400 || liking == 500)
+            // 2020 - 08 - 29 약속 전 호감도 500일때 버튼 출력 삭제
+            if (liking == 100 || liking == 200 || liking == 300 || liking == 400 || Save.eventStartPoint == 1)
             {
                 //Time.timeScale = 0.0f;
                 optionButtonFir.gameObject.SetActive(true);

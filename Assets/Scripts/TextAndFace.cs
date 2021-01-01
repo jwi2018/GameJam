@@ -23,7 +23,12 @@ public class TextAndFace : MonoBehaviour
 
     public Text eventChatText;
 
-    public Sprite faceTypeA, faceTypeB, faceTypeC, faceTypeD, faceTypeE;
+    //public Sprite faceTypeA, faceTypeB, faceTypeC, faceTypeD, faceTypeE;
+
+    public GameObject LovePointButton;
+
+    public Image characterType;
+    public Sprite characterTypeA, characterTypeB, characterTypeC, characterTypeD, characterTypeE;
 
     void Start()
     {
@@ -41,6 +46,7 @@ public class TextAndFace : MonoBehaviour
         yield return null;              // 스위치문 때문에 null 사용
     }
     
+    /*
     IEnumerator ChatFace()     // 얼굴 타입 별 표정 변화
     {
         while (true)
@@ -72,7 +78,190 @@ public class TextAndFace : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
     }
+    */
 
+    IEnumerator ChatFace()     // 얼굴 타입 별 표정 변화
+    {
+        while (true)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 touchPos = new Vector2(worldPos.x, worldPos.y);
+                Ray2D ray = new Ray2D(touchPos, Vector2.zero);
+                RaycastHit2D rayHit = Physics2D.Raycast(ray.origin, ray.direction);
+
+                if (rayHit.collider != null)
+                {
+                    if (rayHit.collider.gameObject.name.Equals("LovePointButton"))
+                    {
+                        ranId = Random.Range(0, 50);
+                        likePhase = Save.Liking_phase.ToString();
+
+                        switch (CsvRead.doubleChatList[ranId, 2])       // 표정 변경 스위치 문 
+                        {
+                            case "0":
+                                //face.sprite = faceTypeA;
+                                characterType.sprite = characterTypeA;
+                                break;
+                            case "1":
+                                //face.sprite = faceTypeB;
+                                characterType.sprite = characterTypeB;
+                                break;
+                            case "2":
+                                //face.sprite = faceTypeC;
+                                characterType.sprite = characterTypeC;
+                                break;
+                            case "3":
+                                //face.sprite = faceTypeD;
+                                characterType.sprite = characterTypeD;
+                                break;
+                            case "4":
+                                //face.sprite = faceTypeE;
+                                characterType.sprite = characterTypeE;
+                                break;
+                        }
+                    }
+                }
+            }
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+    IEnumerator ChatText()      // 대사 출력
+    {
+        while (true)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 touchPos = new Vector2(worldPos.x, worldPos.y);
+                Ray2D ray = new Ray2D(touchPos, Vector2.zero);
+                RaycastHit2D rayHit = Physics2D.Raycast(ray.origin, ray.direction);
+
+                if (rayHit.collider != null)
+                { 
+                    if (rayHit.collider.gameObject.name.Equals("LovePointButton"))
+                    {
+                        liking = Save.Liking;
+                        op = Save.optionPoint;
+                        option = Save.stringEventOption;
+
+                        //Debug.Log(liking);
+                        //Debug.Log(option);
+                        //Debug.Log(op);
+                        //int RanChage = Random.Range(0, 2);
+                        int RanChage = 1;
+
+                        if (RanChage == 1)
+                        {
+                            if (liking < 100)
+                            {
+                                Save.stringEventOption = 0;     // 옵션 값 0으로 변경.             초기에 값을 주기 위해 여기만 0으로 선언   // 2020 - 08 - 28 이벤트 구분 발생을 위함.
+
+                                int ranIdFirs = Random.Range(0, 10);
+                                chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
+                            }
+                            else if (liking == 100)
+                            {
+                                //LovePointButton.SetActive(false);
+
+                                chatList[0].text = CsvRead.doubleChatList[51, 3];
+
+                                //Debug.Log(CsvRead.doubleChatList[51, 3]);
+
+                                for (int num = 0; num < 2; num++)
+                                {
+                                    chatOptionList[num].text = CsvRead.doubleChatOptionList[0, num + 1];
+                                    //Debug.Log(CsvRead.doubleChatOptionList[0, 1]);
+                                    //Debug.Log(CsvRead.doubleChatOptionList[0, 2]);
+                                }
+                            }
+                            else if (liking > 101 && liking < 200)
+                            {
+                                int ranIdFirs = Random.Range(11, 20);
+                                chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
+                            }
+                            else if (liking == 200)
+                            {
+                                //LovePointButton.SetActive(false);
+
+                                chatList[0].text = CsvRead.doubleChatList[52, 3];
+                                for (int num = 0; num < 2; num++)
+                                {
+                                    chatOptionList[num].text = CsvRead.doubleChatOptionList[1, num + 1];
+                                    //Debug.Log(CsvRead.doubleChatOptionList[1, 1]);
+                                    //Debug.Log(CsvRead.doubleChatOptionList[1, 2]);
+                                }
+                            }
+                            else if (liking > 201 && liking < 300)
+                            {
+                                int ranIdFirs = Random.Range(21, 30);
+                                chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
+                            }
+                            else if (liking == 300)
+                            {
+                                //LovePointButton.SetActive(false);
+
+                                chatList[0].text = CsvRead.doubleChatList[53, 3];
+                                for (int num = 0; num < 2; num++)
+                                {
+                                    chatOptionList[num].text = CsvRead.doubleChatOptionList[2, num + 1];
+                                    //Debug.Log(CsvRead.doubleChatOptionList[2, 1]);
+                                    //Debug.Log(CsvRead.doubleChatOptionList[2, 2]);
+                                }
+                            }
+                            else if (liking > 301 && liking < 400)
+                            {
+                                int ranIdFirs = Random.Range(31, 40);
+                                chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
+                            }
+                            else if (liking == 400)
+                            {
+                                //LovePointButton.SetActive(false);
+
+                                chatList[0].text = CsvRead.doubleChatList[54, 3];
+                                for (int num = 0; num < 2; num++)
+                                {
+                                    chatOptionList[num].text = CsvRead.doubleChatOptionList[3, num + 1];
+                                }
+                            }
+                            else if (liking > 401 && liking < 500)
+                            {
+                                int ranIdFirs = Random.Range(41, 50);
+                                chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
+                            }
+                            else if (liking == 500)
+                            {
+                                //LovePointButton.SetActive(false);
+
+                                if(Save.optionPoint == 1)
+                                {
+                                    GameManager.stringEndingOption = 1;
+                                }
+                                else if(Save.optionPoint == 3)
+                                {
+                                    GameManager.stringEndingOption = 2;
+                                }
+                                else if(Save.optionPoint == 5)
+                                {
+                                    GameManager.stringEndingOption = 3;
+                                }
+
+                                Save.stringEventOption = 5;
+                                Save.eventStartPoint = 1;
+
+                                chatList[0].text = CsvRead.doubleChatList[50, 3];
+                            }
+                        }
+                    }
+                }
+            }
+            yield return new WaitForSeconds(0.001f);
+        }
+    }
+
+    /*
     IEnumerator ChatText()      // 대사 출력
     {
         while (true)
@@ -84,15 +273,17 @@ public class TextAndFace : MonoBehaviour
                 option = Save.stringEventOption;
 
                 Debug.Log(liking);
-                //Debug.Log(option);
+                Debug.Log(Save.stringEventOption);
 
-                int RanChage = Random.Range(0, 2);
+                //int RanChage = Random.Range(0, 2);
+                int RanChage = 1;
 
                 if (RanChage == 1)
                 {
                     if (liking < 100)
                     {
-                        Save.stringEventOption = 0;     // 옵션 값 0으로 변경.
+                        Save.stringEventOption = 0;     // 옵션 값 0으로 변경.             초기에 값을 주기 위해 여기만 0으로 선언
+
                         int ranIdFirs = Random.Range(0, 9);
                         chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
                     }
@@ -108,7 +299,16 @@ public class TextAndFace : MonoBehaviour
                     }
                     else if (liking > 101 && liking < 200)
                     {
-                        Save.stringEventOption = 0;
+                        //Save.stringEventOption = 0;                           //   이벤트 종료 후 0으로 선언으로 변경
+                        
+                        // - 2020 - 07 - 28 혜성이 추가 안건 사항 예시
+                        //int RandomEvent = Random.Range(0, 10);
+
+                        //if(RandomEvent == 1)
+                        //{
+                         //   Save.stringEventOption = 1;
+                        //}
+                        
 
                         int ranIdFirs = Random.Range(11, 19);
                         chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
@@ -124,7 +324,8 @@ public class TextAndFace : MonoBehaviour
                     }
                     else if (liking > 201 && liking < 300)
                     {
-                        Save.stringEventOption = 0;
+                        //Save.stringEventOption = 0;
+
                         int ranIdFirs = Random.Range(21, 29);
                         chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
                     }
@@ -139,7 +340,8 @@ public class TextAndFace : MonoBehaviour
                     }
                     else if (liking > 301 && liking < 400)
                     {
-                        Save.stringEventOption = 0;
+                        //Save.stringEventOption = 0;
+
                         int ranIdFirs = Random.Range(31, 39);
                         chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
                     }
@@ -154,7 +356,8 @@ public class TextAndFace : MonoBehaviour
                     }
                     else if (liking > 401 && liking < 500)
                     {
-                        Save.stringEventOption = 0;
+                        //Save.stringEventOption = 0;
+
                         int ranIdFirs = Random.Range(41, 49);
                         chatList[0].text = CsvRead.doubleChatList[ranIdFirs, 3];
                     }
@@ -171,7 +374,7 @@ public class TextAndFace : MonoBehaviour
             }
             yield return new WaitForSeconds(0.001f);
         }
-    }
+    }*/
 
     /*
     IEnumerator CsvReadChatText()           //  채팅 CSV 파일 다 읽어와서 2차 배열에 입력. 
